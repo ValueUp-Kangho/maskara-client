@@ -2,12 +2,14 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
 
+const Home = lazy(() => import("./pages/Home"));
+
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Suspense>
-          <Header></Header>
+          {/* <Header></Header> */}
           <Routes>
             <Route path="/" element={<Home />} />
           </Routes>
