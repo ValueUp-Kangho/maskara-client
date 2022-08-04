@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { links } from "../constants/data.js";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import greenLogo from "../assets/img/greenLogo.png";
+import logo from "../assets/img/logo.png";
 import { useNavigate } from "react-router-dom";
 
 const HeaderContainer = styled.div`
@@ -13,7 +13,7 @@ const HeaderContainer = styled.div`
   align-items: center;
   margin: 0px;
   padding: 10px 0;
-  background-color: #e2ffaf;
+  /* background-color: #e2ffaf; */
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 `;
 
@@ -72,7 +72,7 @@ function Header() {
 
   return (
     <HeaderContainer>
-      <Logo src={greenLogo} onClick={logoHandler}></Logo>
+      <Logo src={logo} onClick={logoHandler}></Logo>
       <Bars onClick={barHandler}>
         <FontAwesomeIcon icon={faBars} size="2x" />
       </Bars>
