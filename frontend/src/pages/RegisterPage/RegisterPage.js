@@ -1,8 +1,9 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import * as Yup from "yup";
 import { Formik } from "formik";
+import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
+import { seouls } from "../../utils/seoul";
 
 const Container = styled.div`
   display: flex;
@@ -14,7 +15,7 @@ const Container = styled.div`
   box-sizing: border-box;
   width: 350px;
   position: absolute;
-  top: 45%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -40%);
   padding: 40px;
@@ -25,10 +26,6 @@ const Title = styled.div`
   height: 50px;
   font-size: xx-large;
   font-weight: 700;
-`;
-
-const Sub = styled.div`
-  margin-bottom: 10px;
 `;
 
 const Form = styled.form`
@@ -53,7 +50,16 @@ const Input = styled.input`
   box-sizing: border-box;
 `;
 
-const LoginButton = styled.button`
+const SelectContainer = styled.select`
+  width: 250px;
+  display: inline-block;
+  padding: 12px 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+`;
+
+const RegisterButton = styled.button`
   width: 250px;
   border: none;
   color: #000;
@@ -68,14 +74,13 @@ const LoginButton = styled.button`
   border: 1px solid #ccc;
 `;
 
-function LoginPage() {
+function RegisterPage() {
   return (
     <div>
       <Container>
-        <Title>로그인</Title>
-        <Sub>또는 회원가입</Sub>
+        <Title>회원 가입</Title>
+        <p />
         <Form>
-          <p />
           <InputContainer>
             아이디
             <p />
@@ -86,12 +91,27 @@ function LoginPage() {
             <p />
             <Input />
           </InputContainer>
+          <InputContainer>
+            비밀번호 확인
+            <p />
+            <Input />
+          </InputContainer>
+          <InputContainer>
+            사는 지역
+            <p />
+            <SelectContainer>
+              {seouls.map((seoul) => (
+                <option value={seoul.value}>{seoul.name}</option>
+              ))}
+            </SelectContainer>
+            <p />
+          </InputContainer>
           <p />
-          <LoginButton>로그인</LoginButton>
+          <RegisterButton>회원 가입</RegisterButton>
         </Form>
       </Container>
     </div>
   );
 }
 
-export default LoginPage;
+export default RegisterPage;
