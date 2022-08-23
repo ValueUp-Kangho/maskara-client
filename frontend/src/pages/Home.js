@@ -121,7 +121,7 @@ function Home() {
           </UserInfo>
           <ProfileImage src={profile}></ProfileImage>
         </PointUp>
-        <PointBar>포인트 300 P</PointBar>
+        <PointBar>마스코인 10 msk</PointBar>
       </Point>
       <MapQRContainer>
         <Map onClick={mapHandler}>

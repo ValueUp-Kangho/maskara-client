@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Formik } from "formik";
+import { Formik, useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { seouls } from "../../utils/seoul";
@@ -75,39 +75,104 @@ const RegisterButton = styled.button`
 `;
 
 function RegisterPage() {
+  const navigate = useNavigate();
+  const formik = useFormik({
+    initialValues: {
+      id: "",
+      nickname: "",
+      password: "",
+      confirmPassword: "",
+    },
+    onSubmit: (values, { setSubmitting }) => {
+      setTimeout(() => {
+        let data = {
+          id: values.id,
+          password: values.password,
+          nickname: values.nickname,
+          residence: values.residence,
+        };
+        console.log(data);
+        setSubmitting(false);
+      }, 500);
+    },
+  });
+
   return (
     <div>
       <Container>
         <Title>회원 가입</Title>
         <p />
-        <Form>
+        <Form onSubmit={formik.handleSubmit}>
           <InputContainer>
             아이디
             <p />
-            <Input />
+            <Input
+              required
+              type="text"
+              id="id"
+              placeholder="아이디를 입력해주세요"
+              value={formik.values.id || ""}
+              onChange={formik.handleChange}
+            />
+          </InputContainer>
+          <InputContainer>
+            닉네임
+            <p />
+            <Input
+              required
+              type="text"
+              id="nickname"
+              placeholder="닉네임"
+              onChange={formik.handleChange}
+            />
           </InputContainer>
           <InputContainer>
             비밀번호
             <p />
-            <Input />
+            <Input
+              required
+              type="password"
+              id="password"
+              placeholder="비밀번호"
+              onChange={formik.handleChange}
+            />
           </InputContainer>
           <InputContainer>
             비밀번호 확인
             <p />
-            <Input />
+            <Input
+              required
+              type="password"
+              id="confirmPassword"
+              placeholder="비밀번호 확인"
+              onChange={formik.handleChange}
+            />
           </InputContainer>
           <InputContainer>
             사는 지역
             <p />
-            <SelectContainer>
+            <SelectContainer
+              //   onChange={(e) => selectChange(e)}
+              onChange={formik.handleChange}
+              defaultValue={"default"}
+              required
+              id="residence"
+            >
+              <option value={"default"} disabled>
+                거주 지역을 선택해주세요.
+              </option>
               {seouls.map((seoul) => (
-                <option value={seoul.value}>{seoul.name}</option>
+                <option value={seoul.value} key={seoul.value}>
+                  {seoul.name}
+                </option>
               ))}
             </SelectContainer>
             <p />
           </InputContainer>
           <p />
-          <RegisterButton>회원 가입</RegisterButton>
+          <RegisterButton htmlType="submit" type="primary">
+            회원 가입
+          </RegisterButton>
         </Form>
       </Container>
     </div>

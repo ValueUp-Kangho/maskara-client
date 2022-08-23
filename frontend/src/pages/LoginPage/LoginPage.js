@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as Yup from "yup";
-import { Formik } from "formik";
+import { Formik, useFormik } from "formik";
+import axios from "axios";
+import { Login } from "../../api/authApi";
 
 const Container = styled.div`
   display: flex;
@@ -29,6 +31,13 @@ const Title = styled.div`
 
 const Sub = styled.div`
   margin-bottom: 10px;
+`;
+
+const RegisterLink = styled.a`
+  color: #2db400;
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 18px;
 `;
 
 const Form = styled.form`
@@ -69,25 +78,76 @@ const LoginButton = styled.button`
 `;
 
 function LoginPage() {
+  const navigate = useNavigate();
+  const [formErrorMessage, setFormErrorMessage] = useState("");
+  const formik = useFormik({
+    initialValues: {
+      id: "",
+      password: "",
+    },
+    onSubmit: (values, { setSubmitting }) => {
+      setTimeout(() => {
+        let data = {
+          id: values.id,
+          password: values.password,
+        };
+
+        Login(data).then((res) => {
+          console.log(res);
+          // if (!res.loginSuccess) setFormErrorMessage(res.message);
+
+          if (res.loginSucess) {
+            window.localStorage.setItem("userId", res.userId);
+            navigate("/");
+          }
+        });
+        setSubmitting(false);
+      }, 500);
+    },
+  });
+
   return (
     <div>
       <Container>
         <Title>로그인</Title>
-        <Sub>또는 회원가입</Sub>
-        <Form>
+        <Sub>
+          또는 <RegisterLink href="/register">회원가입</RegisterLink>
+        </Sub>
+        <Form onSubmit={formik.handleSubmit}>
           <p />
           <InputContainer>
             아이디
             <p />
-            <Input />
+            <Input
+              required
+              id="id"
+              type="text"
+              name="id"
+              placeholder="아이디를 입력해주세요."
+              onChange={formik.handleChange}
+              value={formik.values.id || ""}
+            />
           </InputContainer>
           <InputContainer>
             비밀번호
             <p />
-            <Input />
+            <Input
+              required
+              id="password"
+              type="password"
+              placeholder="비밀번호를 입력해주세요."
+              onChange={formik.handleChange}
+              value={formik.values.password}
+            />
           </InputContainer>
           <p />
-          <LoginButton>로그인</LoginButton>
+          <LoginButton
+            // onClick={handleSubmit}
+            htmlType="submit"
+            type="primary"
+          >
+            로그인
+          </LoginButton>
         </Form>
       </Container>
     </div>
