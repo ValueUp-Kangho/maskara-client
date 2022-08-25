@@ -7,6 +7,7 @@ const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
 const RegisterPage = lazy(() => import("./pages/RegisterPage/RegisterPage"));
 const Home = lazy(() => import("./pages/Home"));
 const MapPage = lazy(() => import("./pages/MapPage"));
+const QrScanPage = lazy(() => import("./pages/QrScanPage"));
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/map" element={<MapPage />} />
+            <Route path="/qr" element={<QrScanPage />} />
           </Routes>
         </Suspense>
       </BrowserRouter>
