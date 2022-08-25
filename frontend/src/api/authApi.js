@@ -2,7 +2,7 @@ import api from "./index";
 
 export const Login = async (data) => {
   const response = await api.post(
-    `${process.env.REACT_APP_SERVER_URL}/login`,
+    `${process.env.REACT_APP_SERVER_URL}/api/login`,
     data
   );
   console.log(response);
@@ -11,7 +11,7 @@ export const Login = async (data) => {
 
 export const Register = async (data) => {
   const response = await api.post(
-    `${process.env.REACT_APP_SERVER_URL}/register`,
+    `${process.env.REACT_APP_SERVER_URL}/api/register`,
     data
   );
   console.log(response.data);
