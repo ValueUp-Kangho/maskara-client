@@ -4,6 +4,7 @@ import { Formik, useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { seouls } from "../../utils/seoul";
+import { Register } from "../../api/authApi";
 
 const Container = styled.div`
   display: flex;
@@ -91,8 +92,12 @@ function RegisterPage() {
           nickname: values.nickname,
           residence: values.residence,
         };
-        console.log(data);
+        // console.log(data);
+        Register(data).then((res) => {
+          console.log(res);
+        });
         setSubmitting(false);
+        navigate("/login");
       }, 500);
     },
   });
