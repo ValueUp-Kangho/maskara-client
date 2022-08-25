@@ -94,10 +94,8 @@ function LoginPage() {
 
         Login(data).then((res) => {
           console.log(res);
-          // if (!res.loginSuccess) setFormErrorMessage(res.message);
-
-          if (res.loginSucess) {
-            window.localStorage.setItem("userId", res.userId);
+          if (res.code == 200) {
+            window.localStorage.setItem("X-AUTH-TOKEN", res.data);
             navigate("/");
           }
         });
@@ -105,7 +103,6 @@ function LoginPage() {
       }, 500);
     },
   });
-
   return (
     <div>
       <Container>

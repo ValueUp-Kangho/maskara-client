@@ -1,7 +1,8 @@
 import profile from "../assets/icon/profile.png";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { Auth } from "../api/authApi";
 
 const Container = styled.div`
   display: flex;
@@ -100,7 +101,8 @@ const Qr = styled.div`
 
 function Home() {
   const navigate = useNavigate();
-
+  const [nickname, setNickname] = useState("");
+  const [point, setPoint] = useState();
   const mapHandler = () => {
     navigate("/map");
   };
@@ -108,6 +110,17 @@ function Home() {
   const qrHandler = () => {
     navigate("/qr");
   };
+
+  useEffect(() => {
+    let data = {
+      "X-AUTH-TOKEN": window.localStorage.getItem("X-AUTH-TOKEN"),
+    };
+    Auth(data).then((res) => {
+      console.log(res);
+      // setNickname(res.)
+      // setPoint(res.)
+    });
+  }, []);
 
   return (
     <Container>
@@ -117,11 +130,11 @@ function Home() {
       <Point>
         <PointUp>
           <UserInfo>
-            강호 님이 <br /> <br /> 지구를 아껴준 시간
+            {nickname} 님이 <br /> <br /> 지구를 아껴준 시간
           </UserInfo>
           <ProfileImage src={profile}></ProfileImage>
         </PointUp>
-        <PointBar>마스코인 10 msk</PointBar>
+        <PointBar>마스코인 {point} msk</PointBar>
       </Point>
       <MapQRContainer>
         <Map onClick={mapHandler}>

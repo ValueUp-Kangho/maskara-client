@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Formik, useFormik } from "formik";
-import * as Yup from "yup";
+import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { seouls } from "../../utils/seoul";
+import { Register } from "../../api/authApi";
 
 const Container = styled.div`
   display: flex;
@@ -92,7 +92,11 @@ function RegisterPage() {
           residence: values.residence,
         };
         console.log(data);
+        Register(data).then((res) => {
+          console.log(res);
+        });
         setSubmitting(false);
+        // navigate("/login");
       }, 500);
     },
   });
