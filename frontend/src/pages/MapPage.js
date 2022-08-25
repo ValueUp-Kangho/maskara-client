@@ -13,10 +13,10 @@ const MapContainer = styled.div`
 
 const MapCloseButton = styled.button`
   position: absolute;
-  top: 600px;
+  top: 550px;
   left: 50px;
   background-color: #ffffff;
-  color: #000000;
+  color: #4dad6c;
   width: 120px;
   height: 40px;
   font-size: 1rem;
@@ -25,14 +25,15 @@ const MapCloseButton = styled.button`
   outline: none;
   border-radius: 5px;
   font-weight: 700;
+  z-index: 999;
 `;
 
 const QrScanButton = styled.button`
   position: absolute;
-  top: 600px;
+  top: 550px;
   right: 50px;
-  background-color: #ffffff;
-  color: #000000;
+  background-color: #4dad6c;
+  color: #ffffff;
   width: 120px;
   height: 40px;
   font-size: 1rem;
@@ -41,6 +42,7 @@ const QrScanButton = styled.button`
   outline: none;
   border-radius: 5px;
   font-weight: 700;
+  z-index: 999;
 `;
 
 function MapPage() {
@@ -90,7 +92,10 @@ function MapPage() {
         isLoading: false,
       }));
     }
+
+    // getMarker 여기 들어가야함.
   }, []);
+  console.log(myLocation); // 현재 내 위치 위도, 경도 정보
 
   return (
     <div>
@@ -100,9 +105,9 @@ function MapPage() {
           style={{
             // 지도의 크기
             width: "100%",
-            height: "450px",
+            height: "650px",
           }}
-          level={3} // 지도의 확대 레벨
+          level={4} // 지도의 확대 레벨
           draggable={true}
         >
           {/* map 으로 마커 여러개 표시하기 */}

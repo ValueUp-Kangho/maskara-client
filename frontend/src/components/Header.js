@@ -13,8 +13,13 @@ const HeaderContainer = styled.div`
   align-items: center;
   margin: 0px;
   padding: 10px 0;
-  /* background-color: #e2ffaf; */
+  background-color: white;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  position: fixed;
+  top: 0;
+  /* left: 0; */
+  width: 100%;
+  z-index: 999;
 `;
 
 const Logo = styled.img`

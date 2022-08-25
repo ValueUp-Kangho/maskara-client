@@ -8,6 +8,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  text-align: center;
 `;
 
 const Info = styled.div`
@@ -120,7 +121,7 @@ function Home() {
           </UserInfo>
           <ProfileImage src={profile}></ProfileImage>
         </PointUp>
-        <PointBar>포인트 300 P</PointBar>
+        <PointBar>마스코인 10 msk</PointBar>
       </Point>
       <MapQRContainer>
         <Map onClick={mapHandler}>
