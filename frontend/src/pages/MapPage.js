@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQrcode } from "@fortawesome/free-solid-svg-icons";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
+import { GetMarkerList } from "../api/mapApi";
 
 const MapContainer = styled.div`
   display: flex;
@@ -47,6 +48,14 @@ const QrScanButton = styled.button`
 
 function MapPage() {
   const navigate = useNavigate();
+
+  const mapCloseHandler = () => {
+    navigate("/");
+  };
+  const qrHandler = () => {
+    navigate("/qr");
+  };
+
   const [myLocation, setMyLocation] = useState({
     center: {
       lat: 33.450701,
@@ -56,12 +65,7 @@ function MapPage() {
     isLoading: true,
   });
 
-  const mapCloseHandler = () => {
-    navigate("/");
-  };
-  const qrHandler = () => {
-    navigate("/qr");
-  };
+  const [markers, setMarkers] = useState([]);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -92,10 +96,18 @@ function MapPage() {
         isLoading: false,
       }));
     }
-
     // getMarker 여기 들어가야함.
+    let data = {
+      "X-AUTH-TOKEN": window.localStorage.getItem("X-AUTH-TOKEN"),
+    };
+
+    GetMarkerList(data).then((res) => {
+      console.log(res.data);
+      setMarkers(res.data);
+    });
   }, []);
-  console.log(myLocation); // 현재 내 위치 위도, 경도 정보
+  // console.log(myLocation); // 현재 내 위치 위도, 경도 정보
+  // console.log(markers);
 
   return (
     <div>
@@ -111,23 +123,24 @@ function MapPage() {
           draggable={true}
         >
           {/* map 으로 마커 여러개 표시하기 */}
-          {/* 
-          {markers.map((position, index) => {
+
+          {markers.map((marker, index) => (
             <MapMarker
-          key={`${position.title}-${position.latlng}`}
-          position={position.latlng} // 마커를 표시할 위치
-          image={{
-            src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png", // 마커이미지의 주소입니다
-            size: {
-              width: 24,
-              height: 35
-            }, // 마커이미지의 크기입니다
-          }}
-          title={position.title} // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-        />
-          })}
-          
-          */}
+              key={marker.id}
+              position={{
+                lat: `${marker.latitude}`,
+                lng: `${marker.longitude}`,
+              }} // 마커를 표시할 위치
+              image={{
+                src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png", // 마커이미지의 주소입니다
+                size: {
+                  width: 24,
+                  height: 35,
+                }, // 마커이미지의 크기입니다
+              }}
+              title={marker.name} // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+            />
+          ))}
 
           {/* 추가로 마커 생성이 완료되면 지도 level에 따라서 다시 마커의 개수를 보여줄 수 있도록 response 받아야함 */}
           {!myLocation.isLoading && <MapMarker position={myLocation.center} />}

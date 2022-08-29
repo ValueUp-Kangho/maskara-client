@@ -1,7 +1,12 @@
 import api from "./index";
 
-export const getMarkerList = async () => {
-  const response = await api.get(`${proces.env.REACT_APP_SERVER_URL}/map`);
-  return response.data;
+export const GetMarkerList = async (data) => {
+  let config = {
+    headers: data,
+  };
+  const response = await api.get(
+    `${process.env.REACT_APP_SERVER_URL}/api/collectionbox`,
+    config
+  );
+  return response;
 };
-
