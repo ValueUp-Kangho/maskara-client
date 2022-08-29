@@ -1,5 +1,11 @@
 .App {
   margin: 0px;
+  font-family: roboto-mono;
+}
+
+@font-face {
+  font-family: roboto-mono;
+  src: url("./utils/RobotoMono-VariableFont_wght.ttf");
 }
 
 /* .App-logo {

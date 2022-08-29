@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/img/logo.png";
 import { useNavigate } from "react-router-dom";
+import { PrimaryColor } from "../utils/style";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -22,9 +23,13 @@ const HeaderContainer = styled.div`
   z-index: 999;
 `;
 
-const Logo = styled.img`
+const Logo = styled.div`
   width: 100px;
   cursor: pointer;
+  font-size: 22px;
+  color: ${PrimaryColor};
+  font-weight: 900;
+  margin-left: 10px;
 `;
 
 const Bars = styled.button`
@@ -35,6 +40,7 @@ const Bars = styled.button`
   border-color: transparent;
   transition: var(--transition);
   cursor: pointer;
+  color: #4dad6c;
 `;
 
 // const NavBar = styled.div`
@@ -77,7 +83,7 @@ function Header() {
 
   return (
     <HeaderContainer>
-      <Logo src={logo} onClick={logoHandler}></Logo>
+      <Logo onClick={logoHandler}>Maskara</Logo>
       <Bars onClick={barHandler}>
         <FontAwesomeIcon icon={faBars} size="2x" />
       </Bars>
