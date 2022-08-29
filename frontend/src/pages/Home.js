@@ -1,7 +1,13 @@
 import profile from "../assets/icon/profile.png";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
 import { useNavigate } from "react-router-dom";
+import { Auth, ResidenceRank } from "../api/authApi";
+import { Autoplay, Navigation } from "swiper";
+import { PrimaryColor } from "../utils/style";
 
 const Container = styled.div`
   display: flex;
@@ -11,8 +17,37 @@ const Container = styled.div`
   text-align: center;
 `;
 
+const PrimaryColorContainer = styled.div`
+  color: ${PrimaryColor};
+  width: 50px;
+`;
+
 const Info = styled.div`
-  margin: 30px 0;
+  margin: 65px 0 20px 0;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+`;
+
+const RankContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-weight: 900;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  color: ${PrimaryColor};
+`;
+
+const SwiperContainer = styled.div`
+  display: flex;
+  align-items: center;
+  width: 350px;
+  font-size: 22px;
+  font-weight: 900;
+  color: ${PrimaryColor};
+  /* border-top: 1px solid #ccc; */
 `;
 
 const Point = styled.div`
@@ -21,7 +56,7 @@ const Point = styled.div`
   flex-direction: column;
   align-items: center;
   border: 1px solid #d3d3d3;
-  border-radius: 5px;
+  border-radius: 10px;
   width: 350px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 `;
@@ -37,9 +72,10 @@ const UserInfo = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 120px;
+  width: 130px;
   padding: 20px 0px;
   font-weight: 700;
+  flex-direction: column;
 `;
 
 const ProfileImage = styled.img`
@@ -54,21 +90,23 @@ const PointBar = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 5px;
+  border-radius: 10px;
   border: 1px solid #d3d3d3;
   width: 300px;
   height: 30px;
   margin-bottom: 20px;
   font-weight: 700;
+  background-color: ${PrimaryColor};
+  color: white;
 `;
 
 const MapQRContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 30px;
   border: 1px solid #d3d3d3;
-  border-radius: 5px;
+  border-radius: 10px;
   width: 350px;
   height: 150px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -79,10 +117,10 @@ const Map = styled.div`
   justify-content: center;
   align-items: center;
   border: 1px solid #d3d3d3;
-  border-radius: 5px;
+  border-radius: 10px;
   width: 100px;
   height: 100px;
-  margin: 30px;
+  margin: 30px 0px 30px 50px;
   font-weight: 700;
 `;
 
@@ -91,16 +129,18 @@ const Qr = styled.div`
   justify-content: center;
   align-items: center;
   border: 1px solid #d3d3d3;
-  border-radius: 5px;
+  border-radius: 10px;
   width: 100px;
   height: 100px;
-  margin: 30px;
+  margin: 30px 50px 30px 0px;
   font-weight: 700;
 `;
 
 function Home() {
   const navigate = useNavigate();
-
+  const [nickname, setNickname] = useState();
+  const [point, setPoint] = useState(10);
+  const [ranks, setRanks] = useState([]);
   const mapHandler = () => {
     navigate("/map");
   };
@@ -109,23 +149,62 @@ function Home() {
     navigate("/qr");
   };
 
+  useEffect(() => {
+    let data = {
+      "X-AUTH-TOKEN": window.localStorage.getItem("X-AUTH-TOKEN"),
+    };
+    Auth(data).then((res) => {
+      console.log(res);
+      setNickname(res.data.nickname);
+      setPoint(res.data.point);
+    });
+
+    // ResidenceRank().then((res) => {
+    //   console.log(res);
+    //   // setRanks(res.data)
+    // });
+  }, []);
+
   return (
     <Container>
       {/* 헤더와 포인트 div 사이 공간 Info? */}
-      <Info></Info>
+      <Info>
+        <RankContainer>서울시 마스크 수거 순위</RankContainer>
+        <SwiperContainer>
+          <Swiper
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
+            // navigation={true}
+            spaceBetween={30}
+            centeredSlides={true}
+            modules={[Autoplay, Navigation]}
+          >
+            {/* {ranks.map((rank, index) => (
+            <SwiperSlide>{rank.residence}</SwiperSlide>
+          ))} */}
+            <SwiperSlide>1위 노원구</SwiperSlide>
+            <SwiperSlide>2</SwiperSlide>
+            <SwiperSlide>3</SwiperSlide>
+          </Swiper>
+        </SwiperContainer>
+      </Info>
       {/* 포인트 정보 div */}
       <Point>
         <PointUp>
           <UserInfo>
-            강호 님이 <br /> <br /> 지구를 아껴준 시간
+            {nickname} 님이
+            <br /> <br /> 지구를 아껴준 시간
           </UserInfo>
           <ProfileImage src={profile}></ProfileImage>
         </PointUp>
-        <PointBar>마스코인 10 msk</PointBar>
+        <PointBar>마스코인 {point} msk</PointBar>
       </Point>
       <MapQRContainer>
         <Map onClick={mapHandler}>
-          수거함 <br /> 확인하기
+          수거함 <br />
+          확인하기
         </Map>
         <Qr onClick={qrHandler}>
           {" "}

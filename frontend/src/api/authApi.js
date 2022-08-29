@@ -11,14 +11,46 @@ export const Login = async (data) => {
 
 export const Register = async (data) => {
   const response = await api.post(
-    `${process.env.REACT_APP_SERVER_URL}/api/register`,
+    `${process.env.REACT_APP_SERVER_URL}/api/signup`,
     data
   );
-  console.log(response.data);
-  return response.data;
+  return response;
 };
 
 export const Logout = async () => {
-  const response = await api.get(`${process.env.REACT_APP_SERVER_URL}/logout`);
+  const response = await api.get(
+    `${process.env.REACT_APP_SERVER_URL}/api/logout`
+  );
   return response.data;
+};
+
+export const Auth = async (data) => {
+  let config = {
+    headers: data,
+  };
+  const response = await api.get(
+    `${process.env.REACT_APP_SERVER_URL}/api/user/detail`,
+    config
+  );
+  return response;
+};
+
+export const MyPage = async (data) => {
+  let config = {
+    headers: {
+      "X-AUTH-TOKEN": data,
+    },
+  };
+  const response = await api.get(
+    `${process.env.REACT_APP_SERVER_URL}/api/user/record`,
+    config
+  );
+  return response;
+};
+
+export const ResidenceRank = async () => {
+  const response = await api.get(
+    `${process.env.REACT_APP_SERVER_URL}/api/residence/rank`
+  );
+  return response;
 };

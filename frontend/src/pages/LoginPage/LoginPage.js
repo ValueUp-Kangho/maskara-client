@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { Formik, useFormik } from "formik";
 import axios from "axios";
 import { Login } from "../../api/authApi";
+import { PrimaryColor } from "../../utils/style";
 
 const Container = styled.div`
   display: flex;
@@ -34,7 +35,7 @@ const Sub = styled.div`
 `;
 
 const RegisterLink = styled.a`
-  color: #2db400;
+  color: ${PrimaryColor};
   text-decoration: none;
   font-weight: 900;
   font-size: 18px;
@@ -65,7 +66,7 @@ const Input = styled.input`
 const LoginButton = styled.button`
   width: 250px;
   border: none;
-  color: #000;
+  color: ${PrimaryColor};
   text-align: center;
   line-height: 2.5rem;
   border-radius: 5px;
@@ -94,10 +95,8 @@ function LoginPage() {
 
         Login(data).then((res) => {
           console.log(res);
-          // if (!res.loginSuccess) setFormErrorMessage(res.message);
-
-          if (res.loginSucess) {
-            window.localStorage.setItem("userId", res.userId);
+          if (res.code === 200) {
+            window.localStorage.setItem("X-AUTH-TOKEN", res.data);
             navigate("/");
           }
         });
@@ -105,7 +104,6 @@ function LoginPage() {
       }, 500);
     },
   });
-
   return (
     <div>
       <Container>
