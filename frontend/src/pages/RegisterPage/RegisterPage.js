@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { seouls } from "../../utils/seoul";
 import { Register } from "../../api/authApi";
+import { PrimaryColor } from "../../utils/style";
 
 const Container = styled.div`
   display: flex;
@@ -15,7 +16,7 @@ const Container = styled.div`
   box-sizing: border-box;
   width: 350px;
   position: absolute;
-  top: 50%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -40%);
   padding: 40px;
@@ -62,7 +63,7 @@ const SelectContainer = styled.select`
 const RegisterButton = styled.button`
   width: 250px;
   border: none;
-  color: #000;
+  color: ${PrimaryColor};
   text-align: center;
   line-height: 2.5rem;
   border-radius: 5px;
@@ -94,9 +95,11 @@ function RegisterPage() {
         console.log(data);
         Register(data).then((res) => {
           console.log(res);
+          if ((res.code = 200)) {
+            navigate("/login");
+          }
         });
         setSubmitting(false);
-        // navigate("/login");
       }, 500);
     },
   });
