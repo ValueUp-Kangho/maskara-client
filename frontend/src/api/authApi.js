@@ -1,4 +1,3 @@
-import { config } from "@fortawesome/fontawesome-svg-core";
 import api from "./index";
 
 export const Login = async (data) => {
@@ -26,9 +25,32 @@ export const Logout = async () => {
 };
 
 export const Auth = async (data) => {
+  let config = {
+    headers: data,
+  };
   const response = await api.get(
-    `${process.env.REACT_APP_SERVER_URL}/api/mainpage`,
-    config({ headers: data })
+    `${process.env.REACT_APP_SERVER_URL}/api/user/detail`,
+    config
   );
-  return response.data;
+  return response;
+};
+
+export const MyPage = async (data) => {
+  let config = {
+    headers: {
+      "X-AUTH-TOKEN": data,
+    },
+  };
+  const response = await api.get(
+    `${process.env.REACT_APP_SERVER_URL}/api/user/record`,
+    config
+  );
+  return response;
+};
+
+export const ResidenceRank = async () => {
+  const response = await api.get(
+    `${process.env.REACT_APP_SERVER_URL}/api/residence/rank`
+  );
+  return response;
 };
