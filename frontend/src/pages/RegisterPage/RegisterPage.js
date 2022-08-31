@@ -169,7 +169,7 @@ function RegisterPage() {
                 거주 지역을 선택해주세요.
               </option>
               {seouls.map((seoul) => (
-                <option value={seoul.value} key={seoul.value}>
+                <option value={seoul.name} key={seoul.value}>
                   {seoul.name}
                 </option>
               ))}
