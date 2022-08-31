@@ -17,11 +17,17 @@ export const Register = async (data) => {
   return response;
 };
 
-export const Logout = async () => {
-  const response = await api.get(
-    `${process.env.REACT_APP_SERVER_URL}/api/logout`
+export const Logout = async (data) => {
+  let config = {
+    headers: data,
+  };
+
+  const response = await api.post(
+    `${process.env.REACT_APP_SERVER_URL}/api/logout`,
+    null,
+    config
   );
-  return response.data;
+  return response;
 };
 
 export const Auth = async (data) => {
