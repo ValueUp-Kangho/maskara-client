@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faQrcode } from "@fortawesome/free-solid-svg-icons";
+import { faQrcode, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import { GetMarkerList } from "../api/mapApi";
+import { GetMarkerDetail, GetMarkerList } from "../api/mapApi";
+import { PrimaryColor } from "../utils/style";
 
 const MapContainer = styled.div`
   display: flex;
@@ -46,16 +47,61 @@ const QrScanButton = styled.button`
   z-index: 999;
 `;
 
+// const DetailContainer = styled.div`
+//   border-radius: 5px;
+// `;
+
+const MarkerDetailContainer = styled.div`
+  /* background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/box_movie.png")
+    no-repeat; */
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  width: 200px;
+  height: 100px;
+  font-weight: 900;
+  font-family: roboto-mono;
+  overflow: auto;
+  outline: 0;
+  /* margin: -10px 0px -10px -10px; */
+  /* padding: 20px 10px; */
+`;
+
+const DetailTopContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ccc;
+`;
+
+const DetailTopLeft = styled.div`
+  display: flex;
+  font-size: 18px;
+`;
+
+const DetailTopRight = styled.button`
+  border: none;
+  color: ${PrimaryColor};
+  text-align: center;
+  width: 20px;
+  /* line-height: 2.5rem; */
+  border-radius: 5px;
+`;
+
+const DetailBottomContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding-top: 30px;
+`;
+
+const DetailBottomLeft = styled.div``;
+
+const DetailBottomRight = styled.div`
+  display: flex;
+  font-size: 14px;
+`;
+
 function MapPage() {
-  const navigate = useNavigate();
-
-  const mapCloseHandler = () => {
-    navigate("/");
-  };
-  const qrHandler = () => {
-    navigate("/qr");
-  };
-
   const [myLocation, setMyLocation] = useState({
     center: {
       lat: 33.450701,
@@ -64,8 +110,8 @@ function MapPage() {
     errMsg: null,
     isLoading: true,
   });
-
   const [markers, setMarkers] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -106,8 +152,67 @@ function MapPage() {
       setMarkers(res.data);
     });
   }, []);
+
   // console.log(myLocation); // 현재 내 위치 위도, 경도 정보
-  // console.log(markers);
+
+  const MarkerDetail = ({ id }) => {
+    const [name, setName] = useState();
+    const [address, setAddress] = useState();
+
+    useEffect(() => {
+      let data = {
+        "X-AUTH-TOKEN": window.localStorage.getItem("X-AUTH-TOKEN"),
+      };
+      GetMarkerDetail(data, id).then((res) => {
+        console.log(res);
+        setName(res.data.name);
+        setAddress(res.data.address);
+      });
+    }, []);
+
+    return (
+      // <DetailContainer>
+      <MarkerDetailContainer>
+        <DetailTopContainer>
+          <DetailTopLeft>{name}</DetailTopLeft>
+          <DetailTopRight>
+            <FontAwesomeIcon icon={faXmark} />
+          </DetailTopRight>
+        </DetailTopContainer>
+        <DetailBottomContainer>
+          <DetailBottomLeft>사진 들어갈 예정</DetailBottomLeft>
+          <DetailBottomRight>{address}</DetailBottomRight>
+        </DetailBottomContainer>
+      </MarkerDetailContainer>
+      // </DetailContainer>
+    );
+  };
+
+  for (let i = 0; i < markers.length; i++) {
+    markers[i].content = <MarkerDetail id={markers[i].id} />;
+  }
+  console.log(markers);
+
+  const EventMarkerContainer = ({ position, content }) => {
+    // const [isOpen, setIsOpen] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
+    return (
+      <MapMarker
+        position={position}
+        onMouseOver={() => setIsVisible(true)}
+        onMouseOut={() => setIsVisible(false)}
+      >
+        {isVisible && content}
+      </MapMarker>
+    );
+  };
+
+  const mapCloseHandler = () => {
+    navigate("/");
+  };
+  const qrHandler = () => {
+    navigate("/qr");
+  };
 
   return (
     <div>
@@ -124,8 +229,8 @@ function MapPage() {
         >
           {/* map 으로 마커 여러개 표시하기 */}
 
-          {markers.map((marker, index) => (
-            <MapMarker
+          {markers.map((marker) => (
+            <EventMarkerContainer
               key={marker.id}
               position={{
                 lat: `${marker.latitude}`,
@@ -139,11 +244,11 @@ function MapPage() {
                 }, // 마커이미지의 크기입니다
               }}
               title={marker.name} // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+              content={marker.content}
             />
           ))}
-
           {/* 추가로 마커 생성이 완료되면 지도 level에 따라서 다시 마커의 개수를 보여줄 수 있도록 response 받아야함 */}
-          {!myLocation.isLoading && <MapMarker position={myLocation.center} />}
+          {/* {!myLocation.isLoading && <MapMarker position={myLocation.center} />} */}
         </Map>
 
         <MapCloseButton onClick={mapCloseHandler}>지도 닫기</MapCloseButton>
