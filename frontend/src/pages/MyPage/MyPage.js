@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { array } from "yup";
 import { MyRecords } from "../../api/authApi";
 import { PrimaryColor } from "../../utils/style";
 
@@ -19,7 +18,7 @@ const SubTitle = styled.div`
   justify-content: center;
   align-items: center;
   width: 200px;
-  margin-right: 90px;
+  margin-right: 100px;
 `;
 
 const SubHeader = styled.div`
@@ -37,6 +36,7 @@ const AngleLeftButton = styled.button`
   background-color: white;
   color: #a9a9a9;
   border: none;
+  margin-left: 10px;
   margin-right: 80px;
 `;
 

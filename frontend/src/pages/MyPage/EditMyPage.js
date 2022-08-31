@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Edit } from "../../api/authApi";
+import { Edit, EditProfile } from "../../api/authApi";
 import { seouls } from "../../utils/seoul";
 import { PrimaryColor } from "../../utils/style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -41,6 +41,7 @@ const AngleLeftButton = styled.button`
   background-color: white;
   color: #a9a9a9;
   border: none;
+  margin-left: 10px;
   margin-right: 80px;
 `;
 
@@ -49,7 +50,7 @@ const SubTitle = styled.div`
   justify-content: center;
   align-items: center;
   width: 200px;
-  margin-right: 90px;
+  margin-right: 100px;
 `;
 
 const Form = styled.form`
@@ -111,21 +112,27 @@ function EditMyPage() {
   const formik = useFormik({
     initialValues: {
       id: "",
-      nickname: "",
+      // nickname: "",
     },
     onSubmit: (values, { setSubmitting }) => {
       setTimeout(() => {
+        let token = {
+          "X-AUTH-TOKEN": window.localStorage.getItem("X-AUTH-TOKEN"),
+        };
+
         let data = {
           nickname: values.nickname,
           residence: values.residence,
         };
+
         console.log(data);
-        // Register(data).then((res) => {
-        //   console.log(res);
-        //   if ((res.code = 200)) {
-        //     navigate("/login");
-        //   }
-        // });
+        EditProfile(token, data).then((res) => {
+          console.log(res);
+          if ((res.code = 200)) {
+            alert(`${myId}님의 정보가 변경되었습니다.`);
+            navigate("/mypage");
+          }
+        });
         setSubmitting(false);
       }, 500);
     },
@@ -179,7 +186,7 @@ function EditMyPage() {
               type="text"
               id="nickname"
               placeholder="닉네임"
-              value={`${nickname}`}
+              value={formik.values.nickname || ""}
               onChange={formik.handleChange}
             />
           </InputContainer>

@@ -67,3 +67,15 @@ export const Edit = async (data) => {
   );
   return response;
 };
+
+export const EditProfile = async (token, data) => {
+  let config = {
+    headers: token,
+  };
+  const response = await api.put(
+    `${process.env.REACT_APP_SERVER_URL}/api/edit`,
+    data,
+    config
+  );
+  return response;
+};
