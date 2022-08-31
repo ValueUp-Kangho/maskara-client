@@ -3,10 +3,9 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/navigation";
 import { useNavigate } from "react-router-dom";
 import { Auth, ResidenceRank } from "../api/authApi";
-import { Autoplay, Navigation } from "swiper";
+import { Autoplay } from "swiper";
 import { PrimaryColor } from "../utils/style";
 
 const Container = styled.div`
@@ -173,20 +172,20 @@ function Home() {
         <RankContainer>서울시 마스크 수거 순위</RankContainer>
         <SwiperContainer>
           <Swiper
-            autoplay={{
-              delay: 2500,
-              disableOnInteraction: false,
-            }}
-            // navigation={true}
             spaceBetween={30}
             centeredSlides={true}
-            modules={[Autoplay, Navigation]}
+            autoplay={{
+              delay: 1000,
+              disableOnInteraction: false,
+            }}
+            modules={[Autoplay]}
           >
             {ranks.map((rank, index) => (
-              <SwiperSlide key={`${rank.residence}`}>
+              <SwiperSlide key={`Residence-${rank.residence}`}>
                 {index + 1}위 {rank.residence} {rank.count}개
               </SwiperSlide>
             ))}
+            <SwiperSlide>모두 동참해주세요!</SwiperSlide>
             {/* <SwiperSlide>1위 노원구</SwiperSlide>
             <SwiperSlide>2</SwiperSlide>
             <SwiperSlide>3</SwiperSlide> */}
