@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { Auth, ResidenceRank } from "../api/authApi";
 import { Autoplay } from "swiper";
 import { PrimaryColor } from "../utils/style";
+import Navbar from "../components/Navbar";
+import Store from "../components/Store";
 
 const Container = styled.div`
   display: flex;
@@ -149,6 +151,9 @@ function Home() {
   };
 
   useEffect(() => {
+    if (window.localStorage.getItem("X-AUTH-TOKEN") == "") {
+      alert("로그인 후 이용해주세요.");
+    }
     let data = {
       "X-AUTH-TOKEN": window.localStorage.getItem("X-AUTH-TOKEN"),
     };
@@ -175,14 +180,14 @@ function Home() {
             spaceBetween={30}
             centeredSlides={true}
             autoplay={{
-              delay: 1000,
+              delay: 2000,
               disableOnInteraction: false,
             }}
             modules={[Autoplay]}
           >
             {ranks.map((rank, index) => (
               <SwiperSlide key={`Residence-${rank.residence}`}>
-                {index + 1}위 {rank.residence} {rank.count}개
+                {index + 1}위 {rank.residence} {rank.count}회
               </SwiperSlide>
             ))}
             <SwiperSlide>모두 동참해주세요!</SwiperSlide>
@@ -216,6 +221,10 @@ function Home() {
           버리기
         </Qr>
       </MapQRContainer>
+      <div style={{ marginBottom: "150px" }}>
+        <Store />
+      </div>
+      <Navbar />
     </Container>
   );
 }
