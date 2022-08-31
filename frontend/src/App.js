@@ -7,8 +7,11 @@ const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
 const RegisterPage = lazy(() => import("./pages/RegisterPage/RegisterPage"));
 const Home = lazy(() => import("./pages/Home"));
 const MapPage = lazy(() => import("./pages/MapPage"));
-const QrScanPage = lazy(() => import("./pages/QrScanPage"));
-const MyPage = lazy(() => import("./pages/MyPage"));
+const QrScanPage = lazy(() => import("./pages/QRPage/QrScanPage"));
+const QrFormPage = lazy(() => import("./pages/QRPage/QrFormPage"));
+const ResultPage = lazy(() => import("./pages/ResultPage"));
+const MyPage = lazy(() => import("./pages/MyPage/MyPage"));
+const EditPage = lazy(() => import("./pages/MyPage/EditMyPage"));
 
 function App() {
   return (
@@ -22,7 +25,10 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/map" element={<MapPage />} />
             <Route path="/qr" element={<QrScanPage />} />
+            <Route path="/qrForm" element={<QrFormPage />} />
+            <Route path="/result" element={<ResultPage />} />
             <Route path="/mypage" element={<MyPage />} />
+            <Route path="/edit" element={<EditPage />} />
           </Routes>
         </Suspense>
       </BrowserRouter>

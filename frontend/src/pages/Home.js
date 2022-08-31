@@ -3,10 +3,9 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/navigation";
 import { useNavigate } from "react-router-dom";
 import { Auth, ResidenceRank } from "../api/authApi";
-import { Autoplay, Navigation } from "swiper";
+import { Autoplay } from "swiper";
 import { PrimaryColor } from "../utils/style";
 
 const Container = styled.div`
@@ -159,34 +158,37 @@ function Home() {
       setPoint(res.data.point);
     });
 
-    // ResidenceRank().then((res) => {
-    //   console.log(res);
-    //   // setRanks(res.data)
-    // });
+    ResidenceRank(data).then((res) => {
+      console.log(res.data);
+      setRanks(res.data);
+    });
+    console.log(ranks);
   }, []);
 
   return (
     <Container>
-      {/* 헤더와 포인트 div 사이 공간 Info? */}
+      {/* 헤더와 포인트 div 사이 공간 Info */}
       <Info>
         <RankContainer>서울시 마스크 수거 순위</RankContainer>
         <SwiperContainer>
           <Swiper
-            autoplay={{
-              delay: 2500,
-              disableOnInteraction: false,
-            }}
-            // navigation={true}
             spaceBetween={30}
             centeredSlides={true}
-            modules={[Autoplay, Navigation]}
+            autoplay={{
+              delay: 1000,
+              disableOnInteraction: false,
+            }}
+            modules={[Autoplay]}
           >
-            {/* {ranks.map((rank, index) => (
-            <SwiperSlide>{rank.residence}</SwiperSlide>
-          ))} */}
-            <SwiperSlide>1위 노원구</SwiperSlide>
+            {ranks.map((rank, index) => (
+              <SwiperSlide key={`Residence-${rank.residence}`}>
+                {index + 1}위 {rank.residence} {rank.count}개
+              </SwiperSlide>
+            ))}
+            <SwiperSlide>모두 동참해주세요!</SwiperSlide>
+            {/* <SwiperSlide>1위 노원구</SwiperSlide>
             <SwiperSlide>2</SwiperSlide>
-            <SwiperSlide>3</SwiperSlide>
+            <SwiperSlide>3</SwiperSlide> */}
           </Swiper>
         </SwiperContainer>
       </Info>
@@ -197,7 +199,9 @@ function Home() {
             {nickname} 님이
             <br /> <br /> 지구를 아껴준 시간
           </UserInfo>
-          <ProfileImage src={profile}></ProfileImage>
+          <a href="/mypage">
+            <ProfileImage src={profile}></ProfileImage>
+          </a>
         </PointUp>
         <PointBar>마스코인 {point} msk</PointBar>
       </Point>

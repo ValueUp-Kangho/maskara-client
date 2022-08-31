@@ -35,11 +35,9 @@ export const Auth = async (data) => {
   return response;
 };
 
-export const MyPage = async (data) => {
+export const MyRecords = async (data) => {
   let config = {
-    headers: {
-      "X-AUTH-TOKEN": data,
-    },
+    headers: data,
   };
   const response = await api.get(
     `${process.env.REACT_APP_SERVER_URL}/api/user/record`,
@@ -48,9 +46,36 @@ export const MyPage = async (data) => {
   return response;
 };
 
-export const ResidenceRank = async () => {
+export const ResidenceRank = async (data) => {
+  let config = {
+    headers: data,
+  };
   const response = await api.get(
-    `${process.env.REACT_APP_SERVER_URL}/api/residence/rank`
+    `${process.env.REACT_APP_SERVER_URL}/api/residence/rank`,
+    config
+  );
+  return response;
+};
+
+export const Edit = async (data) => {
+  let config = {
+    headers: data,
+  };
+  const response = await api.get(
+    `${process.env.REACT_APP_SERVER_URL}/api/user/edit`,
+    config
+  );
+  return response;
+};
+
+export const EditProfile = async (token, data) => {
+  let config = {
+    headers: token,
+  };
+  const response = await api.put(
+    `${process.env.REACT_APP_SERVER_URL}/api/edit`,
+    data,
+    config
   );
   return response;
 };
