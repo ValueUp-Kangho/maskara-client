@@ -16,8 +16,7 @@ const TextContainer = styled.div`
 function QrScanPage() {
   const [scanResultFile, setScanResultFile] = useState();
   const navigate = useNavigate();
-  // adapter.browserDetails.browser;
-  // adapter.browserDetails.version;
+
   return (
     <div
       style={{
