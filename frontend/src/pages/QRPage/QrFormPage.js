@@ -102,7 +102,7 @@ function QrFormPage() {
   const navigate = useNavigate();
 
   let { state } = useLocation();
-  const maskSerialNumber = state.maskSerialNumber;
+  const collectionBoxSerialNumber = state.collectionBoxSerialNumber;
   const [location, setLocation] = useState();
   const [date, setDate] = useState();
   const [pointSum, setPointSum] = useState();
@@ -119,7 +119,7 @@ function QrFormPage() {
         };
 
         let data = {
-          maskSerialNumber: values.maskSerialNumber,
+          collectionBoxSerialNumber: collectionBoxSerialNumber,
           maskCount: values.maskCount,
         };
 
@@ -127,17 +127,17 @@ function QrFormPage() {
         QRForm(token, data).then((res) => {
           console.log(res);
           if ((res.code = 200)) {
-            setMaskCount(data.maskCount);
+            setMaskCount(res.data.maskCount);
             setLocation(res.data.location);
             setDate(res.data.date);
-            setPointSum(res.data.pointSum);
+            setPointSum(res.data.sumPoint);
             alert("마스크 폐기가 완료되었습니다!");
             navigate("/result", {
               state: {
-                maskCount: maskCount,
-                location: location,
-                date: date,
-                pointSum: pointSum,
+                maskCount: res.data.maskCount,
+                location: res.data.location,
+                date: res.data.date,
+                pointSum: res.data.sumPoint,
               },
             });
           }
@@ -147,9 +147,14 @@ function QrFormPage() {
     },
   });
 
+  useEffect(() => {
+    // window.location.reload(true);
+  }, []);
+
   const QrAngleHandler = () => {
     navigate("/qr");
   };
+
   return (
     <div>
       {" "}
@@ -172,7 +177,8 @@ function QrFormPage() {
               required
               type="text"
               id="id"
-              value={formik.values.maskSerialNumber || `${maskSerialNumber}`}
+              defaultValue={`${collectionBoxSerialNumber}`}
+              //   value={formik.values.collectionBoxSerialNumber}
               onChange={formik.handleChange}
               disabled
             />

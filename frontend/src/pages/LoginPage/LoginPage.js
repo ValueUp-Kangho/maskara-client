@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import * as Yup from "yup";
 import { Formik, useFormik } from "formik";
-import axios from "axios";
 import { Login } from "../../api/authApi";
 import { PrimaryColor } from "../../utils/style";
 
@@ -81,6 +79,7 @@ const LoginButton = styled.button`
 function LoginPage() {
   const navigate = useNavigate();
   const [formErrorMessage, setFormErrorMessage] = useState("");
+
   const formik = useFormik({
     initialValues: {
       id: "",

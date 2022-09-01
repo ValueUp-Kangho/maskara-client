@@ -12,6 +12,7 @@ const QrFormPage = lazy(() => import("./pages/QRPage/QrFormPage"));
 const ResultPage = lazy(() => import("./pages/ResultPage"));
 const MyPage = lazy(() => import("./pages/MyPage/MyPage"));
 const EditPage = lazy(() => import("./pages/MyPage/EditMyPage"));
+const Store = lazy(() => import("./components/Store"));
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="/result" element={<ResultPage />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/edit" element={<EditPage />} />
+            <Route path="/store" element={<Store />} />
           </Routes>
         </Suspense>
       </BrowserRouter>

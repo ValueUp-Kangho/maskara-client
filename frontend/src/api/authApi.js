@@ -1,5 +1,9 @@
 import api from "./index";
 
+export const hrefFunc = () => {
+  window.location.href = "http://localhost:3000/login";
+};
+
 export const Login = async (data) => {
   const response = await api.post(
     `${process.env.REACT_APP_SERVER_URL}/api/login`,
@@ -17,22 +21,38 @@ export const Register = async (data) => {
   return response;
 };
 
-export const Logout = async () => {
-  const response = await api.get(
-    `${process.env.REACT_APP_SERVER_URL}/api/logout`
+export const Logout = async (data) => {
+  let config = {
+    headers: data,
+  };
+
+  const response = await api.post(
+    `${process.env.REACT_APP_SERVER_URL}/api/logout`,
+    null,
+    config
   );
-  return response.data;
+  return response;
 };
 
 export const Auth = async (data) => {
   let config = {
     headers: data,
   };
-  const response = await api.get(
-    `${process.env.REACT_APP_SERVER_URL}/api/user/detail`,
-    config
-  );
-  return response;
+  try {
+    const response = await api.get(
+      `${process.env.REACT_APP_SERVER_URL}/api/user/detail`,
+      config
+    );
+    return response;
+  } catch (ex) {
+    if (ex) {
+      console.log(ex.response.status);
+      if (ex.response.status === 403) {
+        alert("로그인 후 이용해주세요.");
+        hrefFunc();
+      }
+    }
+  }
 };
 
 export const MyRecords = async (data) => {
@@ -61,21 +81,41 @@ export const Edit = async (data) => {
   let config = {
     headers: data,
   };
-  const response = await api.get(
-    `${process.env.REACT_APP_SERVER_URL}/api/user/edit`,
-    config
-  );
-  return response;
+  try {
+    const response = await api.get(
+      `${process.env.REACT_APP_SERVER_URL}/api/user/edit`,
+      config
+    );
+    return response;
+  } catch (ex) {
+    if (ex) {
+      console.log(ex.response.status);
+      if (ex.response.status === 403) {
+        alert("로그인 후 이용해주세요.");
+        hrefFunc();
+      }
+    }
+  }
 };
 
 export const EditProfile = async (token, data) => {
   let config = {
     headers: token,
   };
-  const response = await api.put(
-    `${process.env.REACT_APP_SERVER_URL}/api/edit`,
-    data,
-    config
-  );
-  return response;
+  try {
+    const response = await api.put(
+      `${process.env.REACT_APP_SERVER_URL}/api/user/edit`,
+      data,
+      config
+    );
+    return response;
+  } catch (ex) {
+    if (ex) {
+      console.log(ex.response.status);
+      if (ex.response.status === 403) {
+        alert("로그인 후 이용해주세요.");
+        hrefFunc();
+      }
+    }
+  }
 };

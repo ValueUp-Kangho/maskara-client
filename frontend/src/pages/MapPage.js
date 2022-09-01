@@ -91,14 +91,22 @@ const DetailTopRight = styled.button`
 const DetailBottomContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  padding-top: 30px;
 `;
 
-const DetailBottomLeft = styled.div``;
+const DetailBottomLeft = styled.img`
+  width: 100px;
+  height: 75px;
+  resize: both;
+  background-size: 100px 75px;
+  margin-bottom: 50px;
+`;
 
 const DetailBottomRight = styled.div`
   display: flex;
-  font-size: 14px;
+  width: 100px;
+  font-size: 12px;
+  margin-top: 30px;
+  text-align: center;
 `;
 
 function MapPage() {
@@ -158,6 +166,7 @@ function MapPage() {
   const MarkerDetail = ({ id }) => {
     const [name, setName] = useState();
     const [address, setAddress] = useState();
+    const [imgUrl, setImgUrl] = useState();
 
     useEffect(() => {
       let data = {
@@ -167,6 +176,7 @@ function MapPage() {
         console.log(res);
         setName(res.data.name);
         setAddress(res.data.address);
+        setImgUrl(res.data.imgUrl);
       });
     }, []);
 
@@ -175,12 +185,9 @@ function MapPage() {
       <MarkerDetailContainer>
         <DetailTopContainer>
           <DetailTopLeft>{name}</DetailTopLeft>
-          <DetailTopRight>
-            <FontAwesomeIcon icon={faXmark} />
-          </DetailTopRight>
         </DetailTopContainer>
         <DetailBottomContainer>
-          <DetailBottomLeft>사진 들어갈 예정</DetailBottomLeft>
+          <DetailBottomLeft src={imgUrl}></DetailBottomLeft>
           <DetailBottomRight>{address}</DetailBottomRight>
         </DetailBottomContainer>
       </MarkerDetailContainer>
@@ -195,14 +202,10 @@ function MapPage() {
 
   const EventMarkerContainer = ({ position, content }) => {
     // const [isOpen, setIsOpen] = useState(false);
-    const [isVisible, setIsVisible] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     return (
-      <MapMarker
-        position={position}
-        onMouseOver={() => setIsVisible(true)}
-        onMouseOut={() => setIsVisible(false)}
-      >
-        {isVisible && content}
+      <MapMarker position={position} onClick={() => setIsOpen(!isOpen)}>
+        {isOpen && content}
       </MapMarker>
     );
   };

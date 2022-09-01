@@ -85,7 +85,7 @@ function Header() {
     <HeaderContainer>
       <Logo onClick={logoHandler}>Maskara</Logo>
       <Bars onClick={barHandler}>
-        <FontAwesomeIcon icon={faBars} size="2x" />
+        {/* <FontAwesomeIcon icon={faBars} size="2x" /> */}
       </Bars>
       {/* <NavBar ref={linksContainerRef}>
         <Lists ref={linksRef}>

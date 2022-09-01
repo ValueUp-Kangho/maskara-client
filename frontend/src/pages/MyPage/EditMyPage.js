@@ -126,10 +126,10 @@ function EditMyPage() {
         };
 
         console.log(data);
+
         EditProfile(token, data).then((res) => {
-          console.log(res);
-          if ((res.code = 200)) {
-            alert(`${myId}님의 정보가 변경되었습니다.`);
+          if (res.status === 200) {
+            alert("정보가 수정되었습니다.");
             navigate("/mypage");
           }
         });
@@ -205,7 +205,7 @@ function EditMyPage() {
                 거주 지역을 선택해주세요.
               </option>
               {seouls.map((seoul) => (
-                <option value={seoul.value} key={seoul.value}>
+                <option value={seoul.name} key={seoul.value}>
                   {seoul.name}
                 </option>
               ))}

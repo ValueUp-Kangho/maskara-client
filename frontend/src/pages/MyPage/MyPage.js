@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { MyRecords } from "../../api/authApi";
+import { Logout, MyRecords } from "../../api/authApi";
+import Navbar from "../../components/Navbar";
 import { PrimaryColor } from "../../utils/style";
 
 const Container = styled.div`
@@ -17,13 +18,28 @@ const SubTitle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 200px;
-  margin-right: 100px;
+  width: 133px;
+`;
+
+const LogoutContainer = styled.button`
+  border: none;
+  color: ${PrimaryColor};
+  text-align: center;
+  line-height: 2.5rem;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 14px;
+  height: 40px;
+  padding-left: 40px;
+  width: 133px;
+  background-color: white;
 `;
 
 const SubHeader = styled.div`
   margin: 65px 0 20px 0;
   display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   font-weight: 600;
   color: #a9a9a9;
@@ -35,9 +51,12 @@ const AngleLeftButton = styled.button`
   outline: none;
   background-color: white;
   color: #a9a9a9;
+  width: 133px;
+  padding-right: 80px;
   border: none;
-  margin-left: 10px;
-  margin-right: 80px;
+
+  /* margin-left: 10px;
+  margin-right: 80px; */
 `;
 
 const Point = styled.div`
@@ -53,10 +72,11 @@ const Point = styled.div`
 
 const PointUp = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 50px 50px 50px 10px;
+  /* padding: 50px 50px 50px 10px; */
+  margin: 50px 0;
 `;
 
 const UserInfo = styled.div`
@@ -69,7 +89,9 @@ const UserInfo = styled.div`
   flex-direction: column;
 `;
 
-const MaskCount = styled.div``;
+const MaskCount = styled.div`
+  font-weight: 900;
+`;
 
 const PointDown = styled.div`
   display: flex;
@@ -170,7 +192,11 @@ const RecordPoint = styled.div`
   color: ${PrimaryColor};
 `;
 
-function MyPage() {
+const Color = styled.div`
+  color: ${PrimaryColor};
+`;
+
+function MyPage({ homeToggled, storeToggled, myPageToggled }) {
   const navigate = useNavigate();
   const editHandler = () => {
     navigate("/edit");
@@ -184,32 +210,7 @@ function MyPage() {
   const [point, setPoint] = useState();
   const [residence, setResidence] = useState();
   const [sumMask, setSumMask] = useState();
-  const [records, setRecords] = useState([
-    {
-      collectionBoxName: "모아통",
-      maskCount: "12",
-      location: "망원동 123",
-      date: "2022-08-24",
-    },
-    {
-      collectionBoxName: "모아통",
-      maskCount: "9",
-      location: "동국대학교 신공학관",
-      date: "2022-08-23",
-    },
-    {
-      collectionBoxName: "모아통",
-      maskCount: "10",
-      location: "충무로역 1번출구",
-      date: "2022-08-22",
-    },
-    {
-      collectionBoxName: "모아통",
-      maskCount: "2",
-      location: "영통구청",
-      date: "2022-08-21",
-    },
-  ]);
+  const [records, setRecords] = useState([]);
 
   useEffect(() => {
     let data = {
@@ -219,10 +220,24 @@ function MyPage() {
       console.log(res);
       setNickname(res.data.nickname);
       setPoint(res.data.point);
+      setSumMask(res.data.maskCount);
       setResidence(res.data.residence);
-      // setRecords(res.data.activity_record);
+      setRecords(res.data.activityRecord);
     });
   }, []);
+
+  const logoutHandler = () => {
+    let data = {
+      "X-AUTH-TOKEN": window.localStorage.getItem("X-AUTH-TOKEN"),
+    };
+    Logout(data).then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        window.localStorage.removeItem("X-AUTH-TOKEN");
+        navigate("/login");
+      }
+    });
+  };
 
   return (
     <div>
@@ -236,14 +251,13 @@ function MyPage() {
           />
         </AngleLeftButton>
         <SubTitle>마이페이지</SubTitle>
+        <LogoutContainer onClick={logoutHandler}>로그아웃</LogoutContainer>
       </SubHeader>
       <Container>
         <Point>
           <PointUp>
-            <UserInfo>
-              {nickname} 님의 주요 활동 지역 {residence}
-            </UserInfo>
-            <MaskCount>총 마스크 몇개 ㅋㅋ </MaskCount>
+            <UserInfo>{nickname} 님,</UserInfo>
+            <MaskCount>총 마스크 {sumMask}개를 폐기하셨어요! </MaskCount>
           </PointUp>
           <PointDown>
             <PointInfo>마스코인 {point} msk </PointInfo>
@@ -258,18 +272,11 @@ function MyPage() {
                 <RecordMask>마스크 {record.maskCount}개</RecordMask>
                 <RecordLocation>{record.location}</RecordLocation>
               </RecordMaskLoc>
-              <RecordPoint> +10 Point</RecordPoint>
+              <RecordPoint> +1 msk</RecordPoint>
             </Record>
           ))}
-          {/* <Record>
-          <RecordDate>2022.08.24</RecordDate>
-          <RecordMaskLoc>
-            <RecordMask>마스크 10개</RecordMask>
-            <RecordLocation>충무로역</RecordLocation>
-          </RecordMaskLoc>
-          <RecordPoint> +10 Point</RecordPoint>
-        </Record> */}
         </RecordContainer>
+        <Navbar />
       </Container>
     </div>
   );

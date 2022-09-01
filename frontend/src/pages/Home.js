@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { Auth, ResidenceRank } from "../api/authApi";
 import { Autoplay } from "swiper";
 import { PrimaryColor } from "../utils/style";
+import Navbar from "../components/Navbar";
+import Store from "../components/Store";
 
 const Container = styled.div`
   display: flex;
@@ -140,6 +142,7 @@ function Home() {
   const [nickname, setNickname] = useState();
   const [point, setPoint] = useState(10);
   const [ranks, setRanks] = useState([]);
+
   const mapHandler = () => {
     navigate("/map");
   };
@@ -152,8 +155,8 @@ function Home() {
     let data = {
       "X-AUTH-TOKEN": window.localStorage.getItem("X-AUTH-TOKEN"),
     };
+
     Auth(data).then((res) => {
-      console.log(res);
       setNickname(res.data.nickname);
       setPoint(res.data.point);
     });
@@ -175,14 +178,14 @@ function Home() {
             spaceBetween={30}
             centeredSlides={true}
             autoplay={{
-              delay: 1000,
+              delay: 2000,
               disableOnInteraction: false,
             }}
             modules={[Autoplay]}
           >
             {ranks.map((rank, index) => (
               <SwiperSlide key={`Residence-${rank.residence}`}>
-                {index + 1}위 {rank.residence} {rank.count}개
+                {index + 1}위 {rank.residence} {rank.count}회
               </SwiperSlide>
             ))}
             <SwiperSlide>모두 동참해주세요!</SwiperSlide>
@@ -216,6 +219,10 @@ function Home() {
           버리기
         </Qr>
       </MapQRContainer>
+      <div style={{ marginBottom: "150px" }}>
+        <Store />
+      </div>
+      <Navbar />
     </Container>
   );
 }
