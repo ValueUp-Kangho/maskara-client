@@ -26,10 +26,6 @@ function QrScanPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({
-      video: { width: 640, height: 480, facingMode: "environment" },
-    });
-
     html5Qrcode = new Html5Qrcode("reader");
     html5Qrcode.start(
       { facingMode: "environment" },

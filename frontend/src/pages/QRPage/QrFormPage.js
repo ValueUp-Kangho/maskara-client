@@ -110,6 +110,7 @@ function QrFormPage() {
 
   const formik = useFormik({
     initialValues: {
+      collectionBoxSerialNumber: "",
       maskCount: "",
     },
     onSubmit: (values, { setSubmitting }) => {
@@ -119,7 +120,7 @@ function QrFormPage() {
         };
 
         let data = {
-          collectionBoxSerialNumber: collectionBoxSerialNumber,
+          collectionBoxSerialNumber: values.collectionBoxSerialNumber,
           maskCount: values.maskCount,
         };
 
@@ -176,11 +177,11 @@ function QrFormPage() {
             <Input
               required
               type="text"
-              id="id"
-              defaultValue={`${collectionBoxSerialNumber}`}
+              id="collectionBoxSerialNumber"
+              defaultValue={formik.values.collectionBoxSerialNumber || ""}
               //   value={formik.values.collectionBoxSerialNumber}
               onChange={formik.handleChange}
-              disabled
+              // disabled
             />
           </InputContainer>
           <InputContainer>

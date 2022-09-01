@@ -216,7 +216,8 @@ function MapPage() {
     navigate("/");
   };
   const qrHandler = () => {
-    navigate("/qr");
+    // navigate("/qr");
+    navigate("/qrForm");
   };
 
   return (
