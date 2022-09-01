@@ -19,7 +19,7 @@ const MapCloseButton = styled.button`
   left: 50px;
   background-color: #ffffff;
   color: #4dad6c;
-  width: 120px;
+  width: 130px;
   height: 40px;
   font-size: 1rem;
   cursor: pointer;
@@ -36,7 +36,7 @@ const QrScanButton = styled.button`
   right: 50px;
   background-color: #4dad6c;
   color: #ffffff;
-  width: 120px;
+  width: 130px;
   height: 40px;
   font-size: 1rem;
   cursor: pointer;
@@ -57,8 +57,8 @@ const MarkerDetailContainer = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 5px;
-  width: 200px;
-  height: 100px;
+  width: 300px;
+  height: 200px;
   font-weight: 900;
   font-family: roboto-mono;
   overflow: auto;
@@ -76,7 +76,7 @@ const DetailTopContainer = styled.div`
 
 const DetailTopLeft = styled.div`
   display: flex;
-  font-size: 18px;
+  font-size: 15px;
 `;
 
 const DetailTopRight = styled.button`
@@ -94,10 +94,10 @@ const DetailBottomContainer = styled.div`
 `;
 
 const DetailBottomLeft = styled.img`
-  width: 100px;
-  height: 75px;
+  width: 200px;
+  height: 100px;
   resize: both;
-  background-size: 100px 75px;
+  background-size: 200px 100px;
   margin-bottom: 50px;
 `;
 
