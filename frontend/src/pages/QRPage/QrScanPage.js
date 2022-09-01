@@ -36,7 +36,7 @@ function QrScanPage() {
           }
         }}
         videoStyle={{ width: "375px", margin: "0 auto", lineHeight: "400px" }}
-        autofocus={true}
+        constraints={{ facingMode: "environment" }}
       />
       <TextContainer>QR 코드를 위치시켜주세요!</TextContainer>
     </div>
