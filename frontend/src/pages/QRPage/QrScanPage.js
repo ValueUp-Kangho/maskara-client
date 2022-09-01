@@ -26,12 +26,14 @@ function QrScanPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    html5Qrcode = new Html5Qrcode("reader");
-    html5Qrcode.start(
-      { facingMode: "environment" },
-      config,
-      qrCodeSuccessCallback
-    );
+    navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
+      html5Qrcode = new Html5Qrcode("reader");
+      html5Qrcode.start(
+        { facingMode: "environment" },
+        config,
+        qrCodeSuccessCallback
+      );
+    });
   }, []);
 
   const qrCodeSuccessCallback = (decodedText, decodedResult) => {
