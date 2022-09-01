@@ -204,9 +204,6 @@ function Home() {
               </SwiperSlide>
             ))}
             <SwiperSlide>모두 동참해주세요!</SwiperSlide>
-            {/* <SwiperSlide>1위 노원구</SwiperSlide>
-            <SwiperSlide>2</SwiperSlide>
-            <SwiperSlide>3</SwiperSlide> */}
           </Swiper>
         </SwiperContainer>
       </Info>
@@ -216,7 +213,7 @@ function Home() {
           <UserInfo>
             <NicknameContainer>{nickname}님,</NicknameContainer>
             <br /> <br />
-            마스크 <MaskCountContainer>{count} 개</MaskCountContainer>
+            마스크 <MaskCountContainer>{count} 개 </MaskCountContainer>
             <br />
             반납하셨습니다!
           </UserInfo>
