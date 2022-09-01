@@ -216,7 +216,7 @@ function Home() {
           <UserInfo>
             <NicknameContainer>{nickname}님,</NicknameContainer>
             <br /> <br />
-            마스크 <MaskCountContainer>{count}</MaskCountContainer>개를
+            마스크 <MaskCountContainer>{count} 개</MaskCountContainer>
             <br />
             반납하셨습니다!
           </UserInfo>
