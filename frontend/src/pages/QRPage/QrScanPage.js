@@ -1,44 +1,75 @@
 import React, { useEffect, useRef, useState } from "react";
 import { QrReader } from "react-qr-reader";
+import { Html5Qrcode } from "html5-qrcode";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import adapter from "webrtc-adapter";
 
-const TextContainer = styled.div`
+let html5Qrcode;
+
+const config = { fps: 20, qrbox: { width: 300, height: 300 } };
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const Text = styled.div`
+  display: flex;
   font-weight: 900;
-  width: 375px;
-  text-align: center;
-  /* height: 200px; */
-  line-height: 0;
-  margin: 0px;
+  font-size: 18px;
 `;
 
 function QrScanPage() {
-  const [scanResultFile, setScanResultFile] = useState();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    html5Qrcode = new Html5Qrcode("reader");
+    html5Qrcode.start(
+      { facingMode: "environment" },
+      config,
+      qrCodeSuccessCallback
+    );
+  }, []);
+
+  const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+    navigate("/qrForm", {
+      state: { collectionBoxSerialNumber: decodedResult.decodedText },
+    });
+    handleStop();
+  };
+
+  const handleStop = () => {
+    try {
+      html5Qrcode
+        .stop()
+        .then((res) => {
+          html5Qrcode.clear();
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <div
-      style={{
-        width: "375px",
-        margin: "60px auto 0 auto",
-        lineHeight: "600px",
-      }}
-    >
-      <QrReader
-        onResult={(result, error) => {
-          if (!!result) {
-            setScanResultFile(result?.text);
-            window.location.reload(false);
-            navigate("/qrForm", {
-              state: { collectionBoxSerialNumber: result?.text },
-            });
-          }
-        }}
-        videoStyle={{ width: "375px", margin: "0 auto", lineHeight: "400px" }}
-        constraints={{ facingMode: "environment" }}
-      />
-      <TextContainer>QR 코드를 위치시켜주세요!</TextContainer>
+    <div>
+      <Container>
+        <div
+          id="reader"
+          style={{
+            marginTop: "50px",
+            width: "375px",
+            lineHeight: "0",
+            height: "600px",
+          }}
+        ></div>
+        <Text>QR코드를 스캔해주세요!</Text>
+      </Container>
     </div>
   );
 }

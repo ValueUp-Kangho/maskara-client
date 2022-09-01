@@ -90,18 +90,20 @@ const DetailTopRight = styled.button`
 
 const DetailBottomContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
-const DetailBottomLeft = styled.img`
-  width: 200px;
-  height: 100px;
+const DetailBottomTop = styled.img`
+  width: 300px;
+  height: 150px;
   resize: both;
   background-size: 200px 100px;
   margin-bottom: 50px;
 `;
 
-const DetailBottomRight = styled.div`
+const DetailBottomBottom = styled.div`
   display: flex;
   width: 100px;
   font-size: 12px;
@@ -187,8 +189,8 @@ function MapPage() {
           <DetailTopLeft>{name}</DetailTopLeft>
         </DetailTopContainer>
         <DetailBottomContainer>
-          <DetailBottomLeft src={imgUrl}></DetailBottomLeft>
-          <DetailBottomRight>{address}</DetailBottomRight>
+          <DetailBottomTop src={imgUrl}></DetailBottomTop>
+          <DetailBottomBottom>위치: {address}</DetailBottomBottom>
         </DetailBottomContainer>
       </MarkerDetailContainer>
       // </DetailContainer>
