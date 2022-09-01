@@ -101,10 +101,11 @@ const RegisterButton = styled.button`
 function QrFormPage() {
   const navigate = useNavigate();
 
-  let { state } = useLocation();
-  const collectionBoxSerialNumber = state.collectionBoxSerialNumber;
+  // let { state } = useLocation();
+  // const collectionBoxSerialNumber = state.collectionBoxSerialNumber;
   const [location, setLocation] = useState();
   const [date, setDate] = useState();
+  const [point, setPoint] = useState();
   const [pointSum, setPointSum] = useState();
   const [maskCount, setMaskCount] = useState();
 
@@ -132,6 +133,7 @@ function QrFormPage() {
             setLocation(res.data.location);
             setDate(res.data.date);
             setPointSum(res.data.sumPoint);
+            setPoint(res.data.point);
             alert("마스크 폐기가 완료되었습니다!");
             navigate("/result", {
               state: {
@@ -139,6 +141,7 @@ function QrFormPage() {
                 location: res.data.location,
                 date: res.data.date,
                 pointSum: res.data.sumPoint,
+                point: res.data.point,
               },
             });
           }
