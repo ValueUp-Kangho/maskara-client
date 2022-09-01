@@ -162,7 +162,8 @@ function Home() {
   };
 
   const qrHandler = () => {
-    navigate("/qr");
+    // navigate("/qr");
+    navigate("/qrForm");
   };
 
   useEffect(() => {
