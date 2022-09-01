@@ -73,10 +73,23 @@ const UserInfo = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 130px;
+  width: 140px;
   padding: 20px 0px;
   font-weight: 700;
   flex-direction: column;
+`;
+
+const MaskCountContainer = styled.div`
+  text-decoration: underline;
+  text-decoration-color: ${PrimaryColor};
+  text-decoration-thickness: 3px;
+  font-size: 18px;
+`;
+
+const NicknameContainer = styled.div`
+  text-decoration: underline;
+  text-decoration-color: ${PrimaryColor};
+  text-decoration-thickness: 3px;
 `;
 
 const ProfileImage = styled.img`
@@ -142,6 +155,7 @@ function Home() {
   const [nickname, setNickname] = useState();
   const [point, setPoint] = useState(10);
   const [ranks, setRanks] = useState([]);
+  const [count, setCount] = useState();
 
   const mapHandler = () => {
     navigate("/map");
@@ -152,11 +166,6 @@ function Home() {
   };
 
   useEffect(() => {
-    console.log(
-      window.location.protocol,
-      window.location.host,
-      window.location.port
-    );
     let data = {
       "X-AUTH-TOKEN": window.localStorage.getItem("X-AUTH-TOKEN"),
     };
@@ -164,6 +173,7 @@ function Home() {
     Auth(data).then((res) => {
       setNickname(res.data.nickname);
       setPoint(res.data.point);
+      setCount(res.data.count);
     });
 
     ResidenceRank(data).then((res) => {
@@ -204,8 +214,11 @@ function Home() {
       <Point>
         <PointUp>
           <UserInfo>
-            {nickname} 님이
-            <br /> <br /> 지구를 아껴준 시간
+            <NicknameContainer>{nickname}님,</NicknameContainer>
+            <br /> <br />
+            마스크 <MaskCountContainer>{count}</MaskCountContainer>개를
+            <br />
+            반납하셨습니다!
           </UserInfo>
           <a href="/mypage">
             <ProfileImage src={profile}></ProfileImage>

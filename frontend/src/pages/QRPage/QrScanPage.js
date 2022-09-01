@@ -16,8 +16,7 @@ const TextContainer = styled.div`
 function QrScanPage() {
   const [scanResultFile, setScanResultFile] = useState();
   const navigate = useNavigate();
-//   adapter.browserDetails.browser;
-//   adapter.browserDetails.version;
+
   return (
     <div
       style={{
@@ -37,6 +36,7 @@ function QrScanPage() {
           }
         }}
         videoStyle={{ width: "375px", margin: "0 auto", lineHeight: "400px" }}
+        autofocus
       />
       <TextContainer>QR 코드를 위치시켜주세요!</TextContainer>
     </div>
