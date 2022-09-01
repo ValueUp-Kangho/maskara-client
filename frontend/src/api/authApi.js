@@ -1,7 +1,7 @@
 import api from "./index";
 
 export const hrefFunc = () => {
-  window.location.href = "http://localhost:3000/login";
+  window.location.href = "http://13.125.232.151:3000/login";
 };
 
 export const Login = async (data) => {
