@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { QrReader } from "react-qr-reader";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import adapter from "webrtc-adapter";
 
 const TextContainer = styled.div`
   font-weight: 900;
@@ -15,7 +16,8 @@ const TextContainer = styled.div`
 function QrScanPage() {
   const [scanResultFile, setScanResultFile] = useState();
   const navigate = useNavigate();
-
+  adapter.browserDetails.browser;
+  adapter.browserDetails.version;
   return (
     <div
       style={{

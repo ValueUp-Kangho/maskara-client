@@ -1,7 +1,10 @@
 import api from "./index";
 
 export const hrefFunc = () => {
-  window.location.href = "http://localhost:3000/login";
+  let http = window.location.protocol;
+  let host = window.location.host;
+  window.location.href = `${http}//${host}/login`;
+  //도메인 파고 수정
 };
 
 export const Login = async (data) => {
