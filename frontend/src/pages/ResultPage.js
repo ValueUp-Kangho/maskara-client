@@ -144,6 +144,7 @@ function ResultPage() {
   const [location, setLocation] = useState();
   const [pointSum, setPointSum] = useState();
   const [maskCount, setMaskCount] = useState();
+  const [point, setPoint] = useState();
 
   let { state } = useLocation();
   console.log(state);
@@ -153,6 +154,7 @@ function ResultPage() {
     setLocation(state.location);
     setMaskCount(state.maskCount);
     setPointSum(state.pointSum);
+    setPoint(state.point);
   }, []);
 
   return (
@@ -182,7 +184,7 @@ function ResultPage() {
           </MaskCountContainer>
           <CoinContainer>
             <TextContainer>적립 코인</TextContainer>{" "}
-            <StateContainer>마스코인 +1 msk</StateContainer>
+            <StateContainer>마스코인 +{point} msk</StateContainer>
           </CoinContainer>
           <SumCoinContainer>
             <TextContainer>보유 코인</TextContainer>{" "}
