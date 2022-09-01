@@ -91,16 +91,22 @@ const DetailTopRight = styled.button`
 const DetailBottomContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  padding-top: 30px;
 `;
 
 const DetailBottomLeft = styled.img`
-  width: 50px;
+  width: 100px;
+  height: 75px;
+  resize: both;
+  background-size: 100px 75px;
+  margin-bottom: 50px;
 `;
 
 const DetailBottomRight = styled.div`
   display: flex;
-  font-size: 14px;
+  width: 100px;
+  font-size: 12px;
+  margin-top: 30px;
+  text-align: center;
 `;
 
 function MapPage() {
@@ -179,7 +185,6 @@ function MapPage() {
       <MarkerDetailContainer>
         <DetailTopContainer>
           <DetailTopLeft>{name}</DetailTopLeft>
-          <DetailTopRight></DetailTopRight>
         </DetailTopContainer>
         <DetailBottomContainer>
           <DetailBottomLeft src={imgUrl}></DetailBottomLeft>

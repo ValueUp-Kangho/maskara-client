@@ -142,6 +142,7 @@ function Home() {
   const [nickname, setNickname] = useState();
   const [point, setPoint] = useState(10);
   const [ranks, setRanks] = useState([]);
+
   const mapHandler = () => {
     navigate("/map");
   };
@@ -151,14 +152,11 @@ function Home() {
   };
 
   useEffect(() => {
-    if (window.localStorage.getItem("X-AUTH-TOKEN") == "") {
-      alert("로그인 후 이용해주세요.");
-    }
     let data = {
       "X-AUTH-TOKEN": window.localStorage.getItem("X-AUTH-TOKEN"),
     };
+
     Auth(data).then((res) => {
-      console.log(res);
       setNickname(res.data.nickname);
       setPoint(res.data.point);
     });
