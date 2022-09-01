@@ -112,8 +112,8 @@ const DetailBottomRight = styled.div`
 function MapPage() {
   const [myLocation, setMyLocation] = useState({
     center: {
-      lat: 33.450701,
-      lng: 126.570667,
+      lat: 37.5590083,
+      lng: 126.99869,
     },
     errMsg: null,
     isLoading: true,
