@@ -4,7 +4,6 @@ export const hrefFunc = () => {
   let http = window.location.protocol;
   let host = window.location.host;
   window.location.href = `${http}//${host}/login`;
-  //도메인 파고 수정
 };
 
 export const Login = async (data) => {
