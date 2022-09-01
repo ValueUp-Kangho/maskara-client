@@ -152,6 +152,11 @@ function Home() {
   };
 
   useEffect(() => {
+    console.log(
+      window.location.protocol,
+      window.location.host,
+      window.location.port
+    );
     let data = {
       "X-AUTH-TOKEN": window.localStorage.getItem("X-AUTH-TOKEN"),
     };
