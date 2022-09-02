@@ -175,7 +175,7 @@ function ResultPage() {
             <StateContainer>{date}</StateContainer>
           </DateContainer>
           <LocationContainer>
-            <TextContainer>반납 위치</TextContainer>{" "}
+            <TextContainer style={{ width: "70px" }}>반납 위치</TextContainer>{" "}
             <StateContainer>{location}</StateContainer>
           </LocationContainer>
           <MaskCountContainer>
