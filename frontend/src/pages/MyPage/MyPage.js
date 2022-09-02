@@ -166,7 +166,7 @@ const RecordMaskLoc = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 150px;
+  width: 230px;
 `;
 
 const RecordMask = styled.div`
