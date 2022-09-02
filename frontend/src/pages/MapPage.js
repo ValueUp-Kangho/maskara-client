@@ -32,6 +32,23 @@ const MapCloseButton = styled.button`
 
 const QrScanButton = styled.button`
   position: absolute;
+  top: 600px;
+  right: 50px;
+  background-color: #4dad6c;
+  color: #ffffff;
+  width: 130px;
+  height: 40px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 800ms ease all;
+  outline: none;
+  border-radius: 5px;
+  font-weight: 700;
+  z-index: 999;
+`;
+
+const QrFormScanButton = styled.button`
+  position: absolute;
   top: 550px;
   right: 50px;
   background-color: #4dad6c;
@@ -57,8 +74,8 @@ const MarkerDetailContainer = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 5px;
-  width: 300px;
-  height: 200px;
+  width: 200px;
+  height: 150px;
   font-weight: 900;
   font-family: roboto-mono;
   overflow: auto;
@@ -96,18 +113,17 @@ const DetailBottomContainer = styled.div`
 `;
 
 const DetailBottomTop = styled.img`
-  width: 300px;
-  height: 150px;
+  width: 200px;
+  height: 100px;
   resize: both;
-  background-size: 200px 100px;
-  margin-bottom: 50px;
+  background-size: 200px 150px;
+  aspect-ratio: 4 / 3;
 `;
 
 const DetailBottomBottom = styled.div`
   display: flex;
   width: 100px;
   font-size: 12px;
-  margin-top: 30px;
   text-align: center;
 `;
 
@@ -216,8 +232,10 @@ function MapPage() {
     navigate("/");
   };
   const qrHandler = () => {
-    // navigate("/qr");
-    navigate("/qrForm");
+    navigate("/qr");
+  };
+  const qrFormHandler = () => {
+    navigate("/directForm");
   };
 
   return (
@@ -262,6 +280,7 @@ function MapPage() {
           <FontAwesomeIcon icon={faQrcode} style={{ paddingRight: "10px" }} />
           스캔 하기
         </QrScanButton>
+        <QrFormScanButton onClick={qrFormHandler}>직접 입력</QrFormScanButton>
       </MapContainer>
     </div>
   );

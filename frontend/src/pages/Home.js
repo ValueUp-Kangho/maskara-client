@@ -163,7 +163,7 @@ function Home() {
 
   const qrHandler = () => {
     // navigate("/qr");
-    navigate("/qrForm");
+    navigate("/qr");
   };
 
   useEffect(() => {
@@ -214,7 +214,7 @@ function Home() {
           <UserInfo>
             <NicknameContainer>{nickname}님,</NicknameContainer>
             <br /> <br />
-            마스크 <MaskCountContainer>{count} 개 </MaskCountContainer>
+            마스크 <MaskCountContainer>{count} 번 </MaskCountContainer>
             <br />
             반납하셨습니다!
           </UserInfo>

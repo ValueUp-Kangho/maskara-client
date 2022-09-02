@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import styled from "styled-components";
 import { PrimaryColor } from "../../utils/style";
@@ -98,11 +98,8 @@ const RegisterButton = styled.button`
   border: 1px solid #ccc;
 `;
 
-function QrFormPage() {
+function DirectFormPage() {
   const navigate = useNavigate();
-
-  let { state } = useLocation();
-  const collectionBoxSerialNumber = state.collectionBoxSerialNumber;
   const [location, setLocation] = useState();
   const [date, setDate] = useState();
   const [point, setPoint] = useState();
@@ -111,6 +108,7 @@ function QrFormPage() {
 
   const formik = useFormik({
     initialValues: {
+      collectionBoxSerialNumber: "",
       maskCount: "",
     },
     onSubmit: (values, { setSubmitting }) => {
@@ -120,7 +118,7 @@ function QrFormPage() {
         };
 
         let data = {
-          collectionBoxSerialNumber: collectionBoxSerialNumber,
+          collectionBoxSerialNumber: values.collectionBoxSerialNumber,
           maskCount: values.maskCount,
         };
 
@@ -154,15 +152,14 @@ function QrFormPage() {
     // window.location.reload(true);
   }, []);
 
-  const QrAngleHandler = () => {
-    navigate("/qr");
+  const mapAngleHandler = () => {
+    navigate("/map");
   };
-
   return (
     <div>
       {" "}
       <Title>
-        <AngleLeftButton onClick={QrAngleHandler}>
+        <AngleLeftButton onClick={mapAngleHandler}>
           <FontAwesomeIcon
             icon={faAngleLeft}
             // style={{ paddingRight: "120px" }}
@@ -180,7 +177,7 @@ function QrFormPage() {
               required
               type="text"
               id="collectionBoxSerialNumber"
-              defaultValue={collectionBoxSerialNumber || ""}
+              defaultValue={formik.values.collectionBoxSerialNumber || ""}
               //   value={formik.values.collectionBoxSerialNumber}
               onChange={formik.handleChange}
               // disabled
@@ -208,4 +205,4 @@ function QrFormPage() {
   );
 }
 
-export default QrFormPage;
+export default DirectFormPage;
