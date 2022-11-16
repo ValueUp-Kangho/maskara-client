@@ -1,7 +1,7 @@
 ![image](https://user-images.githubusercontent.com/22043939/190970963-789ecca4-fbc5-47d3-abaf-a8c5d9837f4a.png)
 ## ♻️ 폐마스크 수거 및 재활용을 독려하여 환경 가치 창출을 목표로 하는 서비스 ♻️
 
-## ✔️ Client
+## ✔️ Server
 - [maskara_server](https://github.com/ValueUp-Kangho/maskara-server)
 
 ## ⭐️ 개요
